@@ -1,0 +1,92 @@
+﻿@{
+    ViewBag.Title = "Insert Users";
+    Layout = "~/Views/Shared/_Internal.cshtml";
+}
+
+<h2>Cadastre-se</h2>
+<form id="frmInsert" action="@Url.Action("Create")" method="post">
+    <div class="row">
+        <div class="col-xs-8">
+            <div class="form-group col-xs-6">
+                <input type="text" name="name" maxlength="50" class="form-control" placeholder="Nome" required />
+            </div>
+            <div class="form-group col-xs-6">
+                <input type="text" name="CPF" data-mask="00000000000" class="form-control" placeholder="CPF" required />
+            </div>
+            <div class="form-group col-xs-6">
+                <input type="text" id="txtEmail" name="Email" class="form-control" placeholder="Email" required />
+            </div>
+            <div class="form-group col-xs-6">
+                <input type="text" id="txtBirthDate" data-mask="00/00/0000" name="BirthDate" class="form-control" placeholder="Data de Nascimento" />
+            </div>
+            <div class="form-group col-xs-6">
+                <input type="text" name="Adress" maxlength="200" class="form-control" placeholder="Endereco" />
+            </div>
+            <div class="form-group col-xs-6">
+                <input type="text" name="CEP" data-mask="00000000" class="form-control" placeholder="CEP" />
+            </div>
+
+            <div class="form-group col-xs-6">
+                <input type="text" name="Phone" data-mask="00000000" maxlength="200" class="form-control" placeholder="Telefone" />
+            </div>
+            <div class="form-group col-xs-6">
+                <input type="text" name="Cellphone" data-mask="000000000" class="form-control" placeholder="Celular" />
+            </div>
+
+            <div class="form-group col-xs-6">
+                <select name="IdGroup" class="form-control">
+                    <option value="0">Selecione</option>
+                    @foreach (ContentDeliverySystem.DAL.Groups Item in ViewBag.Groups)
+                    {
+                        <option value="@Item.Id">@Item.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group col-xs-6">
+                <select name="Gender" class="form-control">
+                    <option value="0">Indefinido</option>
+                    <option value="1">Masculino</option>
+                    <option value="2">Feminino</option>
+                </select>
+            </div>
+
+            <div class="form-group col-xs-6">
+                <input type="password" id="txtPassword" name="Password" class="form-control" placeholder="Senha" required />
+            </div>
+            <div class="form-group col-xs-6">
+                <input type="password" id="txtPasswordConfirm" name="PasswordConfirmation" class="form-control" placeholder="Confirmação de senha" required />
+            </div>
+
+            <div class="form-group pull-right">
+                <input type="submit" class="btn btn-primary form-control" value="Salvar" />
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#frmInsert").validate();
+            $("#txtBirthDate").rules("add", {
+                required: true,
+                date: true
+            });
+
+            $("#txtPassword").rules("add", {
+                required: true,
+                minlength: 6
+            });
+            $("#txtPasswordConfirm").rules("add", {
+                required: true,
+                minlength: 6
+            });
+
+            $("#txtEmail").rules("add", {
+                required: true,
+                email: true
+            });
+            
+        });
+    </script>
+}

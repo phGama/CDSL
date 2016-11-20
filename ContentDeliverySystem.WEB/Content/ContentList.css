@@ -1,0 +1,37 @@
+﻿div.contentItem {
+    background: #eee;
+    border-radius: 15px;
+    margin: 10px 0px;
+    padding: 20px 10px;
+}
+
+    div.contentItem .description {
+        height:100px;
+    }
+
+    div.contentItem.Podcast {
+        background-color: lightcyan;
+    }
+
+    div.contentItem > img {
+        width: 100%;
+        margin: 5px 0px 10px 0px;
+    }
+
+    div.contentItem span.contentType {
+        float: right;
+        font-weight:bold;
+    }
+
+
+
+div.filtros{
+    font-weight:normal;
+    display:block;
+    padding:0px 15px;
+}
+
+div.filtros label{
+    font-weight:normal;
+    float:right;
+}

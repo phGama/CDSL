@@ -1,0 +1,43 @@
+﻿@model IEnumerable<ContentDeliverySystem.DAL.Genres>
+@{
+    ViewBag.Title = "Genre";
+    Layout = "~/Views/Shared/_Internal.cshtml";
+}
+
+<h2>Genre</h2>
+
+<table id="tablelist" class="table table-striped">
+    <thead>
+        <tr>
+            <td>Name</td>
+            <td>Parent</td>
+            <td>Action</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var Genre in Model)
+        {
+            <tr>
+                <td>
+                    @(Genre.Name)
+                </td>
+                <td>@(Genre.Parent != null ? Genre.Parent.Name : "")</td>
+                <td>
+
+                    <a href="@(Url.Action("edit", new { Id = Genre.Id }))" class="btn btn-default">
+                        <i class="glyphicon glyphicon-edit"></i> Edit
+                    </a>
+
+                    <a class="btn btn-danger cds-btn-del-assert" data-id="@(Genre.Id)"><i class="glyphicon glyphicon-remove"></i> Remove</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts{
+    <script>
+        $("#tablelist").DataTable();
+        deleteActionUrl = '@Url.Action("delete")';
+    </script>
+}

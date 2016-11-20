@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ContentDeliverySystem.SVC.DTO.UserDTO>
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_Internal.cshtml";
+}
+
+<h2>Usuários</h2>
+<table id="tablelist" class="table table-striped">
+    <thead>
+        <tr>
+            <td>Nome</td>
+            <td>Email</td>
+            <td>Status</td>
+
+            <td>Acções</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var UserAccount in Model)
+        {
+            <tr>
+                <td>
+                    @(UserAccount.Name)
+                </td>
+                <td>@(UserAccount.Email)</td>
+                <td>@(UserAccount.Active ? "Ativo" : "Inativo")</td>
+
+                <td>
+                    <a href="@Url.Action("Edit", new { Id = UserAccount.Id })" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                    <a class="btn btn-danger cds-btn-del-assert" data-id="@(UserAccount.Id)"><i class="glyphicon glyphicon-remove"></i> Remove</a>
+                    @if (!UserAccount.Active)
+                    {
+                        <a href="@Url.Action("ResendActivationEmail", new { Email = UserAccount.Email })" class="btn btn-success">
+                            <i class="glyphicon glyphicon-send"></i> Active Email
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts{
+    <script>
+        $("#tablelist").DataTable();
+        deleteActionUrl = '@Url.Action("delete")';
+    </script>
+}

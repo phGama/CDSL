@@ -1,0 +1,4 @@
+*.DAL.dll
+*.pdb
+ContentDeliverySystem.TEST/App.config
+ContentDeliverySystem.WEB/Web.config

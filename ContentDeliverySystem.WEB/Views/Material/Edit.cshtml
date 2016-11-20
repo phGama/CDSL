@@ -1,0 +1,74 @@
+﻿@using ContentDeliverySystem.DAL;
+@model Contents
+@{
+    ViewBag.Title = "Edit Material";
+    Layout = "~/Views/Shared/_Internal.cshtml";
+}
+
+<h2>Edit Material</h2>
+
+<form id="frmEdit" action="@Url.Action("Update")" method="post" enctype="multipart/form-data">
+    <div class="row">
+        <div class="col-xs-4">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <div class="form-group">
+                <input type="text" name="name" value="@Model.Name" maxlength="50" class="form-control" placeholder="Name" required />
+            </div>
+            <div class="form-group">
+                <input type="text" name="Description" value="@Model.Description" maxlength="200" class="form-control" placeholder="Description" />
+            </div>
+            <div class="form-group">
+                <input type="text" id="txtBeginDate" data-mask="00/00/0000" value="@Model.BeginDeliveryDate.ToShortDateString()" name="begindate" class="form-control" placeholder="Begin Delivery Date" />
+            </div>
+            <div class="form-group">
+                <input type="text" id="txtEndDate" data-mask="00/00/0000" value="@Model.EndDeliveryDate.ToShortDateString()"
+                       name="enddate" class="form-control" placeholder="End Delivery Date" />
+            </div>
+            <div class="form-group">
+                <input type="checkbox" name="isbroadcast" @(Model.IsBroadcast?"checked":"") class="" value="true" />
+                IsBroadcast
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="Groups" data-bind="value:groupIds" />
+                <select class="form-control" data-bind="options:unselectedGroups,optionsText:'Name',value:optionSelectedGroup"></select>
+                <button class="btn btn-default" data-bind="click:add"><i class="glyphicon glyphicon-plus-sign"></i></button>
+            </div>
+            <div class="form-group">
+                <input type="file" multiple name="files" class="" required/>
+            </div>
+            <div class="form-group pull-right">
+                <input type="submit" class="btn btn-primary form-control" value="Save" />
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <ul class="list-inline" data-bind="foreach:selectedGroups">
+                <li class="">
+                    <button class="btn btn-danger" data-bind="click:$root.remove">
+                        <i class="glyphicon glyphicon-remove"></i>
+                        <span data-bind="html:Name"></span>
+                    </button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</form>
+@section Scripts{
+
+    <script src="@Url.Content("~/Scripts/knockout-2.2.0.js")"></script>
+    <script src="@Url.Content("~/Scripts/viewmodels/groupSelectViewModel.js")"></script>
+    <script>
+        $(document).ready(function () {
+            $("#frmEdit").validate();
+            $("#txtBeginDate").rules("add", {
+                required: true,
+                date: true
+            });
+            $("#txtEndDate").rules("add", {
+                required: true,
+                date: true
+            });
+        });
+        var model = new groupSelectViewModel(@Html.Raw(ViewBag.Groups),@Html.Raw(ViewBag.SelectedGroupIds));
+        ko.applyBindings(model);
+    </script>
+}

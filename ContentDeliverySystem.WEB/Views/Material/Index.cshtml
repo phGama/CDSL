@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ContentDeliverySystem.SVC.DTO.ContentListItem>
+@{
+    ViewBag.Title = "Materials";
+    Layout = "~/Views/Shared/_Internal.cshtml";
+}
+<link href="@Url.Content("~/Content/ContentList.css")" rel="stylesheet" />
+<h2>@(ViewBag.SubTitle)</h2>
+
+<div class="filtros row">
+    <label>Search:<input data-bind="value:textoPesquisa, valueUpdate:'keypress', change:pesquisar()" class="form-control input-sm" type="search"></label>
+</div>
+
+<div class="row" data-bind="foreach:contents">
+    <div data-bind="visible:IsVisible" class="col-sm-4">
+        <div class="contentItem">
+            <p><span data-bind="html:Name"></span> <span data-bind="html:Type" class="contentType"></span></p>
+            <img data-bind="attr:{src:'@Url.Content("uploads/banners/")'+Image}" />
+            <p data-bind="html:Description" class="description"></p>
+
+            <div class="actions">
+                <a data-bind="attr:{href:DownloadLink}" class="btn btn-default">
+                    <i class="glyphicon glyphicon-download"></i>
+                    Download
+                </a>
+                @if (ViewBag.IsAdmin)
+                {
+                    <a data-bind="attr:{href:'@Url.Action("Edit")/'+Id}" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+
+                    <a data-bind="attr:{'data-id':Id}"
+                       class="btn btn-danger cds-btn-del-assert"><i class="glyphicon glyphicon-remove"></i>Remove</a>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    @Scripts.Render("~/bundles/knockout")
+    <script src="@Url.Content("~/Scripts/viewmodels/contentListViewModel.js")"></script>
+    @if (ViewBag.IsAdmin)
+    {
+        <script>
+            deleteActionUrl = '@Url.Action("delete")';
+        </script>
+    }
+
+    <script>
+        var model;
+        var jsonData;
+        $(document).ready(function () {
+            jsonData = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+            model = new contentListViewModel(jsonData);
+            ko.applyBindings(model);
+            bindBtnDelAssert();
+        });
+
+    </script>
+}

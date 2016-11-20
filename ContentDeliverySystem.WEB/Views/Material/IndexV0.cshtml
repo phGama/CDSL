@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ContentDeliverySystem.SVC.DTO.ContentListItem>
+@{
+    ViewBag.Title = "Materials";
+    Layout = "~/Views/Shared/_Internal.cshtml";
+}
+<h2>@(ViewBag.SubTitle)</h2>
+<table id="tablelist" class="table table-striped">
+    <thead>
+        <tr>
+            <td>Nome</td>
+            <td>Descrição</td>
+            <td>Tipo</td>
+            <td>Ações</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ContentMaterial in Model)
+        {
+            <tr>
+                <td>
+                    @(ContentMaterial.Name)
+                </td>
+                <td>@(ContentMaterial.Description)</td>
+                <td>@(ContentMaterial.Type)</td>
+                <td>
+                    <a href="@(ContentMaterial.DownloadLink)" class="btn btn-default">
+                        <i class="glyphicon glyphicon-download"></i>
+                        Download
+                    </a>
+                    @if (ViewBag.IsAdmin)
+                    {
+                        <a href="@Url.Action("Edit", new { Id=ContentMaterial.Id })" class="btn btn-primary"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+
+                        <a class="btn btn-danger cds-btn-del-assert" data-id="@(ContentMaterial.Id)"><i class="glyphicon glyphicon-remove"></i> Remove</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@section Scripts{
+    <script>
+        $("#tablelist").DataTable();
+    </script>
+    @if (ViewBag.IsAdmin)
+    {
+        <script>
+            deleteActionUrl = '@Url.Action("delete")';
+        </script>
+    }
+
+}

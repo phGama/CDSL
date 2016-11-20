@@ -1,0 +1,91 @@
+﻿@using ContentDeliverySystem.WEB.Models;
+@using ContentDeliverySystem.SVC.DTO;
+@{
+    Layout = null;
+    var SessionObj = Session[GlobalParams.UserSessionKey];
+    AuthResponse Auth = (AuthResponse)SessionObj;
+}
+@if (SessionObj != null)
+{
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="@Url.Action("Books","Material")">livros</a></li>
+                    <li><a href="@Url.Action("Articles","Material")">Artigos</a></li>
+                    <li><a href="@Url.Action("Podcasts","Material")">Podcasts</a></li>
+
+
+                    @if (Auth.IsSuccess && Auth.IsAdmin)
+                    {
+
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Materiais
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("index","Material")">Listar</a></li>
+                                <li><a href="@Url.Action("insert","Material")">Inserir</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Grupos
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("index","Group")">Listar</a></li>
+                                <li><a href="@Url.Action("insert","Group")">Inserir</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Generos
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("index","Genre")">Listar</a></li>
+                                <li><a href="@Url.Action("insert", "Genre")">Inserir</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Usuários
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("index","Users")">Listar</a></li>
+                                <li><a href="@Url.Action("insert", "Users")">Inserir</a></li>
+                            </ul>
+                        </li>
+                    }
+
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+
+                    @if (SessionObj != null)
+                    {
+                        <li>
+                            <a href="@Url.Action("logout","home")">
+                                <i class="glyphicon glyphicon-log-out"></i>
+                                Logout
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a href="@Url.Action("cadastrar","home")">
+                                <i class="glyphicon glyphicon-log-in"></i>
+                                Login
+                            </a>
+                        </li>
+                    }
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+}

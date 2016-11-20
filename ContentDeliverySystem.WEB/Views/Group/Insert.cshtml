@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Group";
+    Layout = "~/Views/Shared/_Internal.cshtml";
+}
+
+<h2>Insert Group</h2>
+<form action="@Url.Action("Create")" method="post">
+    <div class="col-xs-4">
+        <div class="form-group">
+            <input type="text" name="name" maxlength="50" class="form-control" placeholder="Name" />
+        </div>
+        <div class="form-group pull-right">
+            <input type="submit" class="btn btn-primary form-control" value="Save" />
+        </div>
+    </div>
+</form>

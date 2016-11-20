@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d83eed88ad6d4682bf8ea78c56510376" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="CDSModel.Contents" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CDSModel.Groups" Width="1.5" PointX="4.5" PointY="7.125" />
+        <EntityTypeShape EntityType="CDSModel.Tokens" Width="1.5" PointX="5.25" PointY="0.75" />
+        <EntityTypeShape EntityType="CDSModel.TokenTypes" Width="1.5" PointX="9" PointY="0.875" />
+        <EntityTypeShape EntityType="CDSModel.UserTypes" Width="1.5" PointX="10.5" PointY="3.75" />
+        <AssociationConnector Association="CDSModel.FK__Tokens__IdConten__05D8E0BE" />
+        <AssociationConnector Association="CDSModel.FK__Tokens__IdType__03F0984C" />
+        <EntityTypeShape EntityType="CDSModel.Users" Width="1.5" PointX="8.375" PointY="3.5" />
+        <AssociationConnector Association="CDSModel.FK__Users__IdGroup__5AEE82B9" />
+        <AssociationConnector Association="CDSModel.FK__Tokens__IdUser__04E4BC85" />
+        <AssociationConnector Association="CDSModel.FK__Users__IdType__5BE2A6F2" />
+        <EntityTypeShape EntityType="CDSModel.ContentTypes" Width="1.5" PointX="1" PointY="5.75" />
+        <AssociationConnector Association="CDSModel.FK__Contents__IdType__19DFD96B" />
+        <EntityTypeShape EntityType="CDSModel.Genres" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="CDSModel.FK__Genres__IdParent__2BFE89A6" />
+        <AssociationConnector Association="CDSModel.GenreContents" />
+        <EntityTypeShape EntityType="CDSModel.GroupContents" Width="1.5" PointX="3.5" PointY="4.5" />
+        <AssociationConnector Association="CDSModel.FK__GroupCont__IdCon__22AA2996" />
+        <AssociationConnector Association="CDSModel.FK__GroupCont__IdGro__21B6055D" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "ActivationError";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="col-xs-4 col-xs-offset-4">
+    <h2 class="text-danger">Esse usuário já foi ativado</h2>
+    Você será redirecionado em 5 segundos.
+</div>
+    <script>
+        setTimeout(function () {
+            location.href = '@Url.Action("index","home")';
+        }, 5000);
+    </script>

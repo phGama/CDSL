@@ -1,0 +1,289 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CDSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="CDSEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Contents" EntityType="CDSModel.Contents" />
+    <EntitySet Name="Groups" EntityType="CDSModel.Groups" />
+    <EntitySet Name="Tokens" EntityType="CDSModel.Tokens" />
+    <EntitySet Name="TokenTypes" EntityType="CDSModel.TokenTypes" />
+    <EntitySet Name="UserTypes" EntityType="CDSModel.UserTypes" />
+    <AssociationSet Name="FK__Tokens__IdConten__05D8E0BE" Association="CDSModel.FK__Tokens__IdConten__05D8E0BE">
+      <End Role="Contents" EntitySet="Contents" />
+      <End Role="Tokens" EntitySet="Tokens" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tokens__IdType__03F0984C" Association="CDSModel.FK__Tokens__IdType__03F0984C">
+      <End Role="TokenTypes" EntitySet="TokenTypes" />
+      <End Role="Tokens" EntitySet="Tokens" />
+    </AssociationSet>
+    <EntitySet Name="Users" EntityType="CDSModel.Users" />
+    <AssociationSet Name="FK__Users__IdGroup__5AEE82B9" Association="CDSModel.FK__Users__IdGroup__5AEE82B9">
+      <End Role="Groups" EntitySet="Groups" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tokens__IdUser__04E4BC85" Association="CDSModel.FK__Tokens__IdUser__04E4BC85">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Tokens" EntitySet="Tokens" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__IdType__5BE2A6F2" Association="CDSModel.FK__Users__IdType__5BE2A6F2">
+      <End Role="UserTypes" EntitySet="UserTypes" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <EntitySet Name="ContentTypes" EntityType="CDSModel.ContentTypes" />
+    <AssociationSet Name="FK__Contents__IdType__19DFD96B" Association="CDSModel.FK__Contents__IdType__19DFD96B">
+      <End Role="ContentTypes" EntitySet="ContentTypes" />
+      <End Role="Contents" EntitySet="Contents" />
+    </AssociationSet>
+    <EntitySet Name="Genres" EntityType="CDSModel.Genres" />
+    <AssociationSet Name="FK__Genres__IdParent__2BFE89A6" Association="CDSModel.FK__Genres__IdParent__2BFE89A6">
+      <End Role="Genres" EntitySet="Genres" />
+      <End Role="Genres1" EntitySet="Genres" />
+    </AssociationSet>
+    <AssociationSet Name="GenreContents" Association="CDSModel.GenreContents">
+      <End Role="Contents" EntitySet="Contents" />
+      <End Role="Genres" EntitySet="Genres" />
+    </AssociationSet>
+    <EntitySet Name="GroupContents" EntityType="CDSModel.GroupContents" />
+    <AssociationSet Name="FK__GroupCont__IdCon__22AA2996" Association="CDSModel.FK__GroupCont__IdCon__22AA2996">
+      <End Role="Contents" EntitySet="Contents" />
+      <End Role="GroupContents" EntitySet="GroupContents" />
+    </AssociationSet>
+    <AssociationSet Name="FK__GroupCont__IdGro__21B6055D" Association="CDSModel.FK__GroupCont__IdGro__21B6055D">
+      <End Role="Groups" EntitySet="Groups" />
+      <End Role="GroupContents" EntitySet="GroupContents" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Contents">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="FileName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsBroadcast" Type="Boolean" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Tokens" Relationship="CDSModel.FK__Tokens__IdConten__05D8E0BE" FromRole="Contents" ToRole="Tokens" />
+    <Property Name="BeginDeliveryDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndDeliveryDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ISBN" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="Double" Nullable="false" />
+    <Property Name="Duration" Type="Double" Nullable="false" />
+    <Property Name="PublishYear" Type="Int32" Nullable="false" />
+    <Property Name="IdType" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="ContentTypes" Relationship="CDSModel.FK__Contents__IdType__19DFD96B" FromRole="Contents" ToRole="ContentTypes" />
+    <NavigationProperty Name="Genres" Relationship="CDSModel.GenreContents" FromRole="Contents" ToRole="Genres" />
+    <NavigationProperty Name="GroupContents" Relationship="CDSModel.FK__GroupCont__IdCon__22AA2996" FromRole="Contents" ToRole="GroupContents" />
+    <Property Name="ImageName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Groups">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="CDSModel.FK__Users__IdGroup__5AEE82B9" FromRole="Groups" ToRole="Users" />
+    <NavigationProperty Name="GroupContents" Relationship="CDSModel.FK__GroupCont__IdGro__21B6055D" FromRole="Groups" ToRole="GroupContents" />
+  </EntityType>
+  <EntityType Name="Tokens">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdType" Type="Int32" Nullable="false" />
+    <Property Name="IdUser" Type="Int32" Nullable="false" />
+    <Property Name="IdContent" Type="Int32" />
+    <Property Name="Code" Type="String" Nullable="false" MaxLength="32" FixedLength="true" Unicode="false" />
+    <Property Name="ExpireDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Contents" Relationship="CDSModel.FK__Tokens__IdConten__05D8E0BE" FromRole="Tokens" ToRole="Contents" />
+    <NavigationProperty Name="TokenTypes" Relationship="CDSModel.FK__Tokens__IdType__03F0984C" FromRole="Tokens" ToRole="TokenTypes" />
+    <NavigationProperty Name="Users" Relationship="CDSModel.FK__Tokens__IdUser__04E4BC85" FromRole="Tokens" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="TokenTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Tokens" Relationship="CDSModel.FK__Tokens__IdType__03F0984C" FromRole="TokenTypes" ToRole="Tokens" />
+  </EntityType>
+  <EntityType Name="UserTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Users" Relationship="CDSModel.FK__Users__IdType__5BE2A6F2" FromRole="UserTypes" ToRole="Users" />
+  </EntityType>
+  <Association Name="FK__Tokens__IdConten__05D8E0BE">
+    <End Type="CDSModel.Contents" Role="Contents" Multiplicity="0..1" />
+    <End Type="CDSModel.Tokens" Role="Tokens" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contents">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tokens">
+        <PropertyRef Name="IdContent" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tokens__IdType__03F0984C">
+    <End Type="CDSModel.TokenTypes" Role="TokenTypes" Multiplicity="1" />
+    <End Type="CDSModel.Tokens" Role="Tokens" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TokenTypes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tokens">
+        <PropertyRef Name="IdType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdGroup" Type="Int32" />
+    <Property Name="IdType" Type="Int32" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
+    <Property Name="CPF" Type="String" Nullable="false" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="Gender" Type="Byte" />
+    <Property Name="Phone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="Cellphone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+    <Property Name="Adress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CEP" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+    <Property Name="State" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <Property Name="BirthDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Groups" Relationship="CDSModel.FK__Users__IdGroup__5AEE82B9" FromRole="Users" ToRole="Groups" />
+    <NavigationProperty Name="Tokens" Relationship="CDSModel.FK__Tokens__IdUser__04E4BC85" FromRole="Users" ToRole="Tokens" />
+    <NavigationProperty Name="UserTypes" Relationship="CDSModel.FK__Users__IdType__5BE2A6F2" FromRole="Users" ToRole="UserTypes" />
+  </EntityType>
+  <Association Name="FK__Users__IdGroup__5AEE82B9">
+    <End Type="CDSModel.Groups" Role="Groups" Multiplicity="0..1" />
+    <End Type="CDSModel.Users" Role="Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Groups">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="IdGroup" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tokens__IdUser__04E4BC85">
+    <End Type="CDSModel.Users" Role="Users" Multiplicity="1" />
+    <End Type="CDSModel.Tokens" Role="Tokens" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tokens">
+        <PropertyRef Name="IdUser" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__IdType__5BE2A6F2">
+    <End Type="CDSModel.UserTypes" Role="UserTypes" Multiplicity="0..1" />
+    <End Type="CDSModel.Users" Role="Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserTypes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="IdType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="ContentTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Active" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Contents" Relationship="CDSModel.FK__Contents__IdType__19DFD96B" FromRole="ContentTypes" ToRole="Contents" />
+  </EntityType>
+  <Association Name="FK__Contents__IdType__19DFD96B">
+    <End Type="CDSModel.ContentTypes" Role="ContentTypes" Multiplicity="1" />
+    <End Type="CDSModel.Contents" Role="Contents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ContentTypes">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Contents">
+        <PropertyRef Name="IdType" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Genres">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+    <Property Name="IdParent" Type="Int32" />
+    <NavigationProperty Name="Children" Relationship="CDSModel.FK__Genres__IdParent__2BFE89A6" FromRole="Genres" ToRole="Genres1" />
+    <NavigationProperty Name="Parent" Relationship="CDSModel.FK__Genres__IdParent__2BFE89A6" FromRole="Genres1" ToRole="Genres" />
+    <NavigationProperty Name="Contents" Relationship="CDSModel.GenreContents" FromRole="Genres" ToRole="Contents" />
+  </EntityType>
+  <Association Name="FK__Genres__IdParent__2BFE89A6">
+    <End Type="CDSModel.Genres" Role="Genres" Multiplicity="0..1" />
+    <End Type="CDSModel.Genres" Role="Genres1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Genres">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Genres1">
+        <PropertyRef Name="IdParent" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GenreContents">
+    <End Type="CDSModel.Contents" Role="Contents" Multiplicity="*" />
+    <End Type="CDSModel.Genres" Role="Genres" Multiplicity="*" />
+  </Association>
+  <EntityType Name="GroupContents">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IdGroup" Type="Int32" Nullable="false" />
+    <Property Name="IdContent" Type="Int32" Nullable="false" />
+    <Property Name="CreatedAt" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Contents" Relationship="CDSModel.FK__GroupCont__IdCon__22AA2996" FromRole="GroupContents" ToRole="Contents" />
+    <NavigationProperty Name="Groups" Relationship="CDSModel.FK__GroupCont__IdGro__21B6055D" FromRole="GroupContents" ToRole="Groups" />
+  </EntityType>
+  <Association Name="FK__GroupCont__IdCon__22AA2996">
+    <End Type="CDSModel.Contents" Role="Contents" Multiplicity="1" />
+    <End Type="CDSModel.GroupContents" Role="GroupContents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contents">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GroupContents">
+        <PropertyRef Name="IdContent" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__GroupCont__IdGro__21B6055D">
+    <End Type="CDSModel.Groups" Role="Groups" Multiplicity="1" />
+    <End Type="CDSModel.GroupContents" Role="GroupContents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Groups">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GroupContents">
+        <PropertyRef Name="IdGroup" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
